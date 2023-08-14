@@ -26,18 +26,14 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<String> readPostAllByName(String title){
+    public List<PostTitleDto> readPostAllByName(String title){
         List<Post> postList = postRepository.findPostsByTitle(title);
-        List<String> stringList = new ArrayList<>();
+        List<PostTitleDto> postTitleDtoList = postList.stream()
+                .map(PostTitleDto::new)
+                .collect(Collectors.toList());
 
-        for(Post post: postList){
-            stringList.add(post.getTitle());
-        }
-
-        return stringList;
+        return postTitleDtoList;
     }
-
-
 
     public List<PostTitleDto> findPostByCategory(Long categoryId){
         List<Post> postList = postRepository.findPostByCategoryId(categoryId);
@@ -47,5 +43,4 @@ public class PostService {
 
         return postTitleDtoList;
     }
-
 }

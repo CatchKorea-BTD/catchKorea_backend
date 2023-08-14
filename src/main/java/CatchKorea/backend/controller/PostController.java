@@ -63,13 +63,12 @@ public class PostController {
 
     // 게시물로 조회
     @GetMapping("/search")
-    public ResponseEntity<List<String>> getPostByTitle(@RequestParam String title){
-        List<String> postTitles = postService.readPostAllByName(title);
+    public ResponseEntity<List<PostTitleDto>> getPostByTitle(@RequestParam String query){
+        List<PostTitleDto> postTitles = postService.readPostAllByName(query);
         if (postTitles.isEmpty()) {
             throw new CustomException(HttpStatus.OK, "게시물 검색 결과가 없습니다.");
         }
         return ResponseEntity.ok(postTitles);
-
     }
 
 
