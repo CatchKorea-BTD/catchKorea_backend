@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
-    @Query("SELECT p FROM Category c JOIN c.postList p WHERE c.id= : categoryId")
+    @Query("SELECT p FROM Category c JOIN c.postList p WHERE c.id= :categoryId")
     List<Post> findPostByCategoryId(@Param("categoryId") Long categoryId);
 }
