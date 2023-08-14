@@ -16,4 +16,8 @@ public class HashtagService {
         Optional<Hashtag> hashtag = hashTagRepository.findHashtagById(id);
         return hashtag;
     }
+
+    public void save(Hashtag hashtag) {
+        hashTagRepository.save(hashtag);
+    }
 }
