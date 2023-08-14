@@ -1,5 +1,7 @@
 package CatchKorea.backend.controller;
 
+import CatchKorea.backend.dto.CategoryDto;
+import CatchKorea.backend.dto.HashTagDto;
 import CatchKorea.backend.dto.PostDto;
 import CatchKorea.backend.entity.Category;
 import CatchKorea.backend.entity.Hashtag;
@@ -11,11 +13,10 @@ import CatchKorea.backend.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import static CatchKorea.backend.dto.CategoryDto.*;
+import static CatchKorea.backend.dto.HashTagDto.*;
 import static CatchKorea.backend.dto.PostDto.*;
 import static CatchKorea.backend.exception.CustomExceptions.*;
 
@@ -27,7 +28,9 @@ public class PostController {
     private final HashtagService hashtagService;
 
     @PostMapping("/post/{category_id}/{hashtag_id}")
-    public ResponseEntity<Post> uploadPost(@PathVariable Long category_id,@PathVariable Long hashtag_id, PostRequestDto postRequestDto) {
+    public ResponseEntity<PostRequestDto> uploadPost(@PathVariable Long category_id,
+                                                     @PathVariable Long hashtag_id,
+                                                     @RequestBody PostRequestDto postRequestDto) {
         Category category = categoryService.findCategoryById(category_id)
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "category를 찾을 수 없습니다."));
 
@@ -38,6 +41,20 @@ public class PostController {
         post.setCategory(category);
         post.setHashtag(hashtag);
         postService.save(post);
-        return ResponseEntity.ok(post);
+        return ResponseEntity.ok(postRequestDto);
+    }
+
+    @PostMapping("/hashtag/upload")
+    public ResponseEntity<HashTagRequestDto> uploadHashTag(@RequestBody HashTagRequestDto hashTagRequestDto) {
+        Hashtag hashtag = hashTagRequestDto.to_Entity();
+        hashtagService.save(hashtag);
+        return ResponseEntity.ok(hashTagRequestDto);
+    }
+
+    @PostMapping("category/upload")
+    public ResponseEntity<CategoryRequestDto> uploadCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+        Category category = categoryRequestDto.to_Entity();
+        categoryService.save(category);
+        return ResponseEntity.ok(categoryRequestDto);
     }
 }
