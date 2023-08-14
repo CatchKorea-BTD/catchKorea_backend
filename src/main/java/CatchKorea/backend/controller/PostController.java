@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 import static CatchKorea.backend.dto.CategoryDto.*;
@@ -26,10 +28,7 @@ public class PostController {
                                                      @RequestBody PostRequestDto postRequestDto) {
         Category category = categoryService.findCategoryById(category_id)
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "category를 찾을 수 없습니다."));
-
-        Post post = postRequestDto.to_Entity();
-        post.setCategory(category);
-        postService.save(post);
+        postService.save(category,postRequestDto);
         return ResponseEntity.ok(postRequestDto);
     }
 

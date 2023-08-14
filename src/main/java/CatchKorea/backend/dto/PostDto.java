@@ -20,7 +20,6 @@ public class PostDto {
                     .title(title)
                     .contents(contents)
                     .serviceLink(serverLink)
-                    .hashtag(hashTag)
                     .build();
         }
     }

@@ -3,6 +3,7 @@ package CatchKorea.backend.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,12 +25,12 @@ public class Post {
 
     @Column(nullable = false)
     private String serviceLink;
-    @Column(nullable = false)
-    private String hashtag;
+    @ElementCollection
+    private List<String> hashtag;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "root_category_id")
     private RootCategory rootCategory;

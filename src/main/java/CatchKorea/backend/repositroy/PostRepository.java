@@ -14,6 +14,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     List<Post> findPostByCategoryId(@Param("categoryId") Long categoryId);
 
     List<Post> findPostsByTitle(String title);
-    @Query("SELECT p FROM Post p WHERE p.hashtag LIKE %:hashTag%")
-    List<Post> findPostByHashtag(String hashTag);
+    @Query("SELECT p FROM Post p WHERE :searchHashTag MEMBER OF p.hashtag")
+    List<Post> findPostByHashtag(String searchHashTag);
 }
