@@ -61,8 +61,11 @@ public class PostController {
     }
 
     @GetMapping("/post/{category_id}")
-    public ResponseEntity<?> getPostByCategory(@PathVariable Long category_id) {
+    public ResponseEntity<List<PostTitleDto>> getPostByCategory(@PathVariable Long category_id) {
         List<PostTitleDto> postTitleDtoList = postService.findPostByCategory(category_id);
+        if (postTitleDtoList.isEmpty()) {
+            throw new CustomException(HttpStatus.OK, "검색결과 없습니다.");
+        }
         return ResponseEntity.ok(postTitleDtoList);
     }
 }
