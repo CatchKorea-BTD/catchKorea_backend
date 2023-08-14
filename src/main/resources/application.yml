@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/catchkorea?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: ghddydwns0928!!
+    url: ${CLEARDB_DATABASE_URL}
+    username: ${database_username}
+    password: ${database_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
