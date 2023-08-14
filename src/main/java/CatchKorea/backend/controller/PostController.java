@@ -60,12 +60,26 @@ public class PostController {
         return ResponseEntity.ok(categoryRequestDto);
     }
 
+
     // 게시물로 조회
     @GetMapping("/search")
     public ResponseEntity<List<String>> getPostByTitle(@RequestParam String title){
         List<String> postTitles = postService.readPostAllByName(title);
+        if (postTitles.isEmpty()) {
+            throw new CustomException(HttpStatus.OK, "게시물 검색 결과가 없습니다.");
+        }
         return ResponseEntity.ok(postTitles);
 
+    }
+
+
+    @GetMapping("/post/{category_id}")
+    public ResponseEntity<List<PostTitleDto>> getPostByCategory(@PathVariable Long category_id) {
+        List<PostTitleDto> postTitleDtoList = postService.findPostByCategory(category_id);
+        if (postTitleDtoList.isEmpty()) {
+            throw new CustomException(HttpStatus.OK, "게시물이 없습니다.");
+        }
+        return ResponseEntity.ok(postTitleDtoList);
     }
 
 }

@@ -23,4 +23,17 @@ public class PostDto {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PostTitleDto {
+        private Long id;
+        private String title;
+
+        public PostTitleDto(Post post) {
+            this.id = post.getId();
+            this.title = post.getTitle();
+        }
+    }
+
 }
