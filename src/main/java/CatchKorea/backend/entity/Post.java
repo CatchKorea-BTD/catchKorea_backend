@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
@@ -20,9 +21,6 @@ public class Post {
 
     @Column(nullable = false)
     private String contents;
-
-    @Column(nullable = false)
-    private String hashTag;
 
     @Column(nullable = false)
     private String serviceLink;
@@ -39,10 +37,4 @@ public class Post {
     @JoinColumn(name = "root_category_id")
     private RootCategory rootCategory;
 
-    public Post(String title, String contents, String hashTag, String serviceLink) {
-        this.title = title;
-        this.contents = contents;
-        this.hashTag = hashTag;
-        this.serviceLink = serviceLink;
-    }
 }
