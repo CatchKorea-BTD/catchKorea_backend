@@ -7,6 +7,7 @@ import CatchKorea.backend.entity.Category;
 import CatchKorea.backend.entity.Post;
 import CatchKorea.backend.repositroy.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
@@ -22,12 +23,17 @@ import static CatchKorea.backend.dto.PostDto.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
     private final PostRepository postRepository;
 
     public void save(Category category, PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
-        List<String> hashTags = Arrays.asList(postRequestDto.getHashTag().split(","));
+        log.info(postRequestDto.getHashtag());
+        List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        log.info(hashTags.toString());
         post.setCategory(category);
         post.setHashtag(hashTags);
         savePost(post);

@@ -13,7 +13,7 @@ public class PostDto {
         private String title;
         private String contents;
         private String serverLink;
-        private String hashTag;
+        private String hashtag;
 
         public Post to_Entity() {
             return Post.builder()
