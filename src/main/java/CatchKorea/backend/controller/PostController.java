@@ -62,9 +62,9 @@ public class PostController {
 
     // 게시물로 조회
     @GetMapping("/search")
-    public ResponseEntity<List<PostDto>> getPostByTitle(@RequestParam String title){
-        List<PostDto> postdto = postService.readPostOneByName(title);
-        return ResponseEntity.ok(postdto);
+    public ResponseEntity<List<String>> getPostByTitle(@RequestParam String title){
+        List<String> postTitles = postService.readPostAllByName(title);
+        return ResponseEntity.ok(postTitles);
 
     }
 

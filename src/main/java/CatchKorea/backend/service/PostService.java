@@ -6,18 +6,26 @@ import CatchKorea.backend.repositroy.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+
     public void save(Post post) {
         postRepository.save(post);
     }
-    public List<PostDto> readPostOneByName(String title){
+    public List<String> readPostAllByName(String title){
+        List<Post> postList = postRepository.findPostsByTitle(title);
+        List<String> stringList = new ArrayList<>();
 
-        return postRepository.findByTitleContainingIgnoreCase(title);
+        for(Post post: postList){
+            stringList.add(post.getTitle());
+        }
+
+        return stringList;
     }
 
 }
