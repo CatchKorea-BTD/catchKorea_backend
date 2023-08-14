@@ -60,6 +60,7 @@ public class PostController {
         return ResponseEntity.ok(categoryRequestDto);
     }
 
+    // 게시물로 조회
     @GetMapping("/search")
     public ResponseEntity<List<PostDto>> getPostByTitle(@RequestParam String title){
         List<PostDto> postdto = postService.readPostOneByName(title);
