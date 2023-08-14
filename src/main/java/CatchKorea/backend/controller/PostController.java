@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static CatchKorea.backend.dto.CategoryDto.*;
 import static CatchKorea.backend.dto.HashTagDto.*;
 import static CatchKorea.backend.dto.PostDto.*;
@@ -56,5 +58,12 @@ public class PostController {
         Category category = categoryRequestDto.to_Entity();
         categoryService.save(category);
         return ResponseEntity.ok(categoryRequestDto);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PostDto>> getPostByTitle(@RequestParam String title){
+        List<PostDto> postdto = postService.readPostOneByName(title);
+        return ResponseEntity.ok(postdto);
+
     }
 }
