@@ -13,12 +13,14 @@ public class PostDto {
         private String title;
         private String contents;
         private String serverLink;
+        private String hashTag;
 
         public Post to_Entity() {
             return Post.builder()
                     .title(title)
                     .contents(contents)
                     .serviceLink(serverLink)
+                    .hashtag(hashTag)
                     .build();
         }
     }
@@ -26,11 +28,11 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostTitleDto {
+    public static class PostTitleResponseDto {
         private Long id;
         private String title;
 
-        public PostTitleDto(Post post) {
+        public PostTitleResponseDto(Post post) {
             this.id = post.getId();
             this.title = post.getTitle();
         }

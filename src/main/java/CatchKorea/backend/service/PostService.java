@@ -2,7 +2,6 @@ package CatchKorea.backend.service;
 
 import CatchKorea.backend.dto.PostDto;
 
-import CatchKorea.backend.dto.PostDto.PostTitleDto;
 
 import CatchKorea.backend.entity.Post;
 import CatchKorea.backend.repositroy.PostRepository;
@@ -16,6 +15,8 @@ import java.util.List;
 
 import java.util.stream.Collectors;
 
+import static CatchKorea.backend.dto.PostDto.*;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,19 +27,29 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<PostTitleDto> readPostAllByName(String title){
+    public List<PostTitleResponseDto> readPostAllByName(String title){
         List<Post> postList = postRepository.findPostsByTitle(title);
-        List<PostTitleDto> postTitleDtoList = postList.stream()
-                .map(PostTitleDto::new)
+        List<PostTitleResponseDto> postTitleDtoList = postList.stream()
+                .map(PostTitleResponseDto::new)
                 .collect(Collectors.toList());
 
         return postTitleDtoList;
     }
 
-    public List<PostTitleDto> findPostByCategory(Long categoryId){
+    public List<PostTitleResponseDto> findPostByCategory(Long categoryId){
         List<Post> postList = postRepository.findPostByCategoryId(categoryId);
-        List<PostTitleDto> postTitleDtoList = postList.stream()
-                .map(PostTitleDto::new)
+        List<PostTitleResponseDto> postTitleDtoList = postList.stream()
+                .map(PostTitleResponseDto::new)
+                .collect(Collectors.toList());
+
+        return postTitleDtoList;
+    }
+
+    public List<PostTitleResponseDto> findPostsByHashTag(String hashTag) {
+        List<Post> postList = postRepository.findPostByHashtag(hashTag);
+
+        List<PostTitleResponseDto> postTitleDtoList = postList.stream()
+                .map(PostTitleResponseDto::new)
                 .collect(Collectors.toList());
 
         return postTitleDtoList;

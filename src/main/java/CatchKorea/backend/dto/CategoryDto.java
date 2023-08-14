@@ -1,7 +1,6 @@
 package CatchKorea.backend.dto;
 
 import CatchKorea.backend.entity.Category;
-import CatchKorea.backend.entity.Hashtag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
