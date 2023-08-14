@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: ${CLEARDB_DATABASE_URL}
+    username: ${database_username}
+    password: ${database_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
