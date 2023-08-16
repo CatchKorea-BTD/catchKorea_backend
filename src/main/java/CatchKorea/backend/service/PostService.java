@@ -35,6 +35,15 @@ public class PostService {
         postRepository.save(post);
     }
 
+    public void saveWithoutCategory(PostRequestDto postRequestDto) {
+        Post post = postRequestDto.to_Entity();
+        List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        post.setHashtag(hashTags);
+        postRepository.save(post);
+    }
+
     public Optional<Post> getPostById(Long id) {
         Optional<Post> post = postRepository.findPostById(id);
         return post;
