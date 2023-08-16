@@ -27,13 +27,30 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostTitleResponseDto {
+    public static class PostResponseDto {
         private Long id;
         private String title;
 
-        public PostTitleResponseDto(Post post) {
+        public PostResponseDto(Post post) {
             this.id = post.getId();
             this.title = post.getTitle();
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PostContentsResponse {
+        private Long id;
+        private String title;
+        private String content;
+        private String serviceLink;
+
+        public PostContentsResponse(Post post) {
+            this.id = post.getId();
+            this.title = post.getTitle();
+            this.content = post.getContents();
+            this.serviceLink = post.getServiceLink();
         }
     }
 

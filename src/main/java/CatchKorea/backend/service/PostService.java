@@ -1,7 +1,5 @@
 package CatchKorea.backend.service;
 
-import CatchKorea.backend.dto.PostDto;
-
 
 import CatchKorea.backend.entity.Category;
 import CatchKorea.backend.entity.Post;
@@ -11,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static CatchKorea.backend.dto.PostDto.*;
@@ -36,38 +34,36 @@ public class PostService {
         log.info(hashTags.toString());
         post.setCategory(category);
         post.setHashtag(hashTags);
-        savePost(post);
-    }
-
-    private void savePost(Post post) {
         postRepository.save(post);
     }
 
-    public List<PostTitleResponseDto> readPostAllByName(String title){
-        List<Post> postList = postRepository.findPostsByTitle(title);
-        List<PostTitleResponseDto> postTitleDtoList = postList.stream()
-                .map(PostTitleResponseDto::new)
-                .collect(Collectors.toList());
-
-        return postTitleDtoList;
+    public Optional<Post> getPostById(Long id) {
+        Optional<Post> post = postRepository.findPostById(id);
+        return post;
     }
 
-    public List<PostTitleResponseDto> findPostByCategory(Long categoryId){
+    public Optional<Post> getPostByName(String title){
+        Optional<Post> post = postRepository.findPostByTitle(title);
+        return post;
+    }
+
+    public List<PostResponseDto> findPostByCategory(Long categoryId){
         List<Post> postList = postRepository.findPostByCategoryId(categoryId);
-        List<PostTitleResponseDto> postTitleDtoList = postList.stream()
-                .map(PostTitleResponseDto::new)
+        List<PostResponseDto> postTitleDtoList = postList.stream()
+                .map(PostResponseDto::new)
                 .collect(Collectors.toList());
 
         return postTitleDtoList;
     }
 
-    public List<PostTitleResponseDto> findPostsByHashTag(String hashTag) {
+    public List<PostResponseDto> findPostsByHashTag(String hashTag) {
         List<Post> postList = postRepository.findPostByHashtag(hashTag);
 
-        List<PostTitleResponseDto> postTitleDtoList = postList.stream()
-                .map(PostTitleResponseDto::new)
+        List<PostResponseDto> postTitleDtoList = postList.stream()
+                .map(PostResponseDto::new)
                 .collect(Collectors.toList());
 
         return postTitleDtoList;
     }
+
 }
