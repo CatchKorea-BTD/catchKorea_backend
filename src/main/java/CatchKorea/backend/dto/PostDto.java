@@ -12,14 +12,14 @@ public class PostDto {
     public static class PostRequestDto {
         private String title;
         private String contents;
-        private String serverLink;
+        private String serviceLink;
         private String hashtag;
 
         public Post to_Entity() {
             return Post.builder()
                     .title(title)
                     .contents(contents)
-                    .serviceLink(serverLink)
+                    .serviceLink(serviceLink)
                     .build();
         }
     }

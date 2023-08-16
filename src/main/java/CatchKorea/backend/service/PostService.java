@@ -27,11 +27,9 @@ public class PostService {
 
     public void save(Category category, PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
-        log.info(postRequestDto.getHashtag());
         List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
-        log.info(hashTags.toString());
         post.setCategory(category);
         post.setHashtag(hashTags);
         postRepository.save(post);
