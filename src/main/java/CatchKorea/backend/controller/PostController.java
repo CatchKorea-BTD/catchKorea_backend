@@ -33,6 +33,12 @@ public class PostController {
         return ResponseEntity.ok(postRequestDto);
     }
 
+    @PostMapping("/upload/post")
+    public ResponseEntity<?> uploadPostWithoutCategory(@RequestBody PostRequestDto postRequestDto) {
+        postService.saveWithoutCategory(postRequestDto);
+        return ResponseEntity.ok(postRequestDto);
+    }
+
     @PostMapping("category/upload")
     public ResponseEntity<CategoryResponseDto> uploadCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         Category category = categoryRequestDto.to_Entity();
