@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static CatchKorea.backend.dto.CategoryDto.*;
 import static CatchKorea.backend.dto.PostDto.*;
@@ -33,27 +34,33 @@ public class PostController {
     }
 
     @PostMapping("category/upload")
-    public ResponseEntity<CategoryRequestDto> uploadCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+    public ResponseEntity<CategoryResponseDto> uploadCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         Category category = categoryRequestDto.to_Entity();
         categoryService.save(category);
-        return ResponseEntity.ok(categoryRequestDto);
+        CategoryResponseDto categoryResponseDto = new CategoryResponseDto(category);
+        return ResponseEntity.ok(categoryResponseDto);
     }
 
 
     // 게시물로 조회
     @GetMapping("/search")
-    public ResponseEntity<List<PostTitleResponseDto>> getPostByTitle(@RequestParam String query) {
-        List<PostTitleResponseDto> postTitles = postService.readPostAllByName(query);
-        if (postTitles.isEmpty()) {
-            throw new CustomException(HttpStatus.OK, "게시물 검색 결과가 없습니다.");
-        }
-        return ResponseEntity.ok(postTitles);
+    public ResponseEntity<PostContentsResponse> getPostByTitle(@RequestParam String query) {
+        Post post = postService.getPostByName(query).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "해당 제목에 대한 게시물이 존재하지 않습니다."));
+        PostContentsResponse postContentsResponse = new PostContentsResponse(post);
+        return ResponseEntity.ok(postContentsResponse);
+    }
+
+    @GetMapping("/search/{id}")
+    public ResponseEntity<PostContentsResponse> getPostById(@PathVariable Long id) {
+        Post post = postService.getPostById(id).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "게시물이 존재하지 않습니다."));
+        PostContentsResponse postContentsResponse = new PostContentsResponse(post);
+        return ResponseEntity.ok(postContentsResponse);
     }
 
 
     @GetMapping("/post/{category_id}")
-    public ResponseEntity<List<PostTitleResponseDto>> getPostByCategory(@PathVariable Long category_id) {
-        List<PostTitleResponseDto> postTitleDtoList = postService.findPostByCategory(category_id);
+    public ResponseEntity<List<PostResponseDto>> getPostByCategory(@PathVariable Long category_id) {
+        List<PostResponseDto> postTitleDtoList = postService.findPostByCategory(category_id);
         if (postTitleDtoList.isEmpty()) {
             throw new CustomException(HttpStatus.OK, "게시물이 없습니다.");
         }
@@ -61,8 +68,8 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public ResponseEntity<?> getPostsByHashTag(@RequestParam String hashTag) {
-        List<PostTitleResponseDto> postTitleDtoList = postService.findPostsByHashTag(hashTag);
+    public ResponseEntity<List<PostResponseDto>> getPostsByHashTag(@RequestParam String hashTag) {
+        List<PostResponseDto> postTitleDtoList = postService.findPostsByHashTag(hashTag);
         if (postTitleDtoList.isEmpty()) {
             throw new CustomException(HttpStatus.OK,"해당 HashTag를 가진 제품이 없습니다.");
         }

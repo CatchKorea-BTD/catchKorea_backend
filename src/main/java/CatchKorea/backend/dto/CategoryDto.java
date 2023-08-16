@@ -17,4 +17,17 @@ public class CategoryDto {
                     .build();
         }
     }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CategoryResponseDto {
+        private Long categoryId;
+        private String categoryName;
+
+        public CategoryResponseDto(Category category) {
+            this.categoryId = category.getId();
+            this.categoryName = category.getCategoryName();
+        }
+    }
 }
