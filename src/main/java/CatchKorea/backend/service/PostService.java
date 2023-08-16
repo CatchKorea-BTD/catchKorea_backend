@@ -7,6 +7,7 @@ import CatchKorea.backend.repositroy.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import static CatchKorea.backend.dto.PostDto.*;
 public class PostService {
     private final PostRepository postRepository;
 
+    @Transactional
     public void save(Category category, PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
         List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
@@ -35,6 +37,7 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional
     public void saveWithoutCategory(PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
         List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
