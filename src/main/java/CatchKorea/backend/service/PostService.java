@@ -64,6 +64,7 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional
     public void deletePost(Long id) {
         Post post = postRepository.findPostById(id).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "Post를 찾을 수 없습니다."));
         postRepository.delete(post);
