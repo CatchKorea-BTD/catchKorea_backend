@@ -46,7 +46,18 @@ public class PostController {
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto(category);
         return ResponseEntity.ok(categoryResponseDto);
     }
-
+    // id 값으로 post update
+    @PatchMapping("/post/update/{id}")
+    public ResponseEntity<PostRequestDto> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
+        postService.updatePost(id, postRequestDto);
+        return ResponseEntity.ok(postRequestDto);
+    }
+    // id 값으로 post 삭제
+    @DeleteMapping("/post/delete/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
+        postService.deletePost(id);
+        return ResponseEntity.ok("Post 삭제 완료");
+    }
 
     // 게시물로 조회
     @GetMapping("/search")
@@ -55,15 +66,14 @@ public class PostController {
         PostContentsResponse postContentsResponse = new PostContentsResponse(post);
         return ResponseEntity.ok(postContentsResponse);
     }
-
+    // ID로 post 반환
     @GetMapping("/search/{id}")
     public ResponseEntity<PostContentsResponse> getPostById(@PathVariable Long id) {
         Post post = postService.getPostById(id).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "게시물이 존재하지 않습니다."));
         PostContentsResponse postContentsResponse = new PostContentsResponse(post);
         return ResponseEntity.ok(postContentsResponse);
     }
-
-
+    // 카테고리 ID로 post 반환
     @GetMapping("/post/{category_id}")
     public ResponseEntity<List<PostResponseDto>> getPostByCategory(@PathVariable Long category_id) {
         List<PostResponseDto> postTitleDtoList = postService.findPostByCategory(category_id);
@@ -72,7 +82,7 @@ public class PostController {
         }
         return ResponseEntity.ok(postTitleDtoList);
     }
-
+    // hashtag로 post 반환
     @GetMapping("/post")
     public ResponseEntity<List<PostResponseDto>> getPostsByHashTag(@RequestParam String hashTag) {
         List<PostResponseDto> postTitleDtoList = postService.findPostsByHashTag(hashTag);

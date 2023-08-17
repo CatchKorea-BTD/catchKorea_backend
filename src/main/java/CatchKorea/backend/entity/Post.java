@@ -26,6 +26,8 @@ public class Post {
 
     @Column(nullable = false)
     private String serviceLink;
+    @Column(nullable = false)
+    private String imageLink;
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private List<String> hashtag = new ArrayList<>();

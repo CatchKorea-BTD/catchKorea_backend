@@ -3,9 +3,11 @@ package CatchKorea.backend.service;
 
 import CatchKorea.backend.entity.Category;
 import CatchKorea.backend.entity.Post;
+import CatchKorea.backend.exception.CustomExceptions;
 import CatchKorea.backend.repositroy.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static CatchKorea.backend.dto.PostDto.*;
+import static CatchKorea.backend.exception.CustomExceptions.*;
 
 
 @Service
@@ -35,6 +38,35 @@ public class PostService {
         post.setCategory(category);
         post.setHashtag(hashTags);
         postRepository.save(post);
+    }
+
+    @Transactional
+    public void updatePost(Long postId, PostRequestDto postRequestDto) {
+        Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "post를 찾을 수 없습니다."));
+        if (postRequestDto.getTitle() != null) {
+            post.setTitle(postRequestDto.getTitle());
+        }
+        if (postRequestDto.getContents() != null) {
+            post.setContents(postRequestDto.getContents());
+        }
+        if (postRequestDto.getServiceLink() != null) {
+            post.setServiceLink(postRequestDto.getServiceLink());
+        }
+        if (postRequestDto.getHashtag() != null) {
+            List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toList());
+            post.setHashtag(hashTags);
+        }
+        if (postRequestDto.getImageLink() != null) {
+            post.setImageLink(postRequestDto.getImageLink());
+        }
+        postRepository.save(post);
+    }
+
+    public void deletePost(Long id) {
+        Post post = postRepository.findPostById(id).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "Post를 찾을 수 없습니다."));
+        postRepository.delete(post);
     }
 
     @Transactional

@@ -16,12 +16,14 @@ public class PostDto {
         private String contents;
         private String serviceLink;
         private String hashtag;
+        private String imageLink;
 
         public Post to_Entity() {
             return Post.builder()
                     .title(title)
                     .contents(contents)
                     .serviceLink(serviceLink)
+                    .imageLink(imageLink)
                     .build();
         }
     }
@@ -32,10 +34,16 @@ public class PostDto {
     public static class PostResponseDto {
         private Long id;
         private String title;
+        private String contents;
+        private List<String> hashtag;
+        private String imageLink;
 
         public PostResponseDto(Post post) {
             this.id = post.getId();
             this.title = post.getTitle();
+            this.contents = post.getContents();
+            this.hashtag = post.getHashtag();
+            this.imageLink = post.getImageLink();
         }
     }
 
@@ -48,6 +56,7 @@ public class PostDto {
         private String content;
         private String serviceLink;
         private List<String> hashtag;
+        private String imageLink;
 
         public PostContentsResponse(Post post) {
             this.id = post.getId();
@@ -55,6 +64,7 @@ public class PostDto {
             this.content = post.getContents();
             this.serviceLink = post.getServiceLink();
             this.hashtag = post.getHashtag();
+            this.imageLink = post.getImageLink();
         }
     }
 
