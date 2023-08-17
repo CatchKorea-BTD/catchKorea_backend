@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class PostDto {
     @Data
     @AllArgsConstructor
@@ -45,12 +47,14 @@ public class PostDto {
         private String title;
         private String content;
         private String serviceLink;
+        private List<String> hashtag;
 
         public PostContentsResponse(Post post) {
             this.id = post.getId();
             this.title = post.getTitle();
             this.content = post.getContents();
             this.serviceLink = post.getServiceLink();
+            this.hashtag = post.getHashtag();
         }
     }
 
