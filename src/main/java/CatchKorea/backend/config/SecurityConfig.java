@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-fe-eight.vercel.app","https://catchkorea.vercel.app"));
+        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-fe-eight.vercel.app","https://catchkorea.vercel.app","https://hackathon-fe-8bpd-dbid1rg3c-hansanga.vercel.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
