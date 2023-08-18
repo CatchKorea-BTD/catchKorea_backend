@@ -86,7 +86,7 @@ public class PostService {
     }
 
     public Optional<Post> getPostByName(String title){
-        Optional<Post> post = postRepository.findPostByTitle(title);
+        Optional<Post> post = postRepository.findPostByTitleIgnoreCase(title);
         return post;
     }
 

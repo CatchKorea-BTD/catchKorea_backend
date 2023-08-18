@@ -87,13 +87,13 @@ class PostServiceTest {
         //given
         Post post = Post.builder()
                 .id(1L)
-                .title("카카오맵")
+                .title("KAKAO MAP")
                 .contents("카카오맵은 대한민국의 대표적인 지도 맵입니다.")
                 .serviceLink("www.google.com")
                 .build();
         //when
-        when(postRepository.findPostByTitle("카카오맵")).thenReturn(Optional.of(post));
-        Optional<Post> postOptional = postService.getPostByName("카카오맵");
+        when(postRepository.findPostByTitleIgnoreCase("kakao map")).thenReturn(Optional.of(post));
+        Optional<Post> postOptional = postService.getPostByName("kakao map");
         Post real_post = postOptional.get();
         //then
         assertEquals(real_post.getId(), 1L);
