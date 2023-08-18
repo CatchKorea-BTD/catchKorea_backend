@@ -24,13 +24,15 @@ public class Post {
     @Column(nullable = false, length = 2000)
     private String contents;
 
-    @Column(nullable = false)
     private String serviceLink;
-    @Column(nullable = false)
+
+    @Column(length = 500)
     private String imageLink;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private List<String> hashtag = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
