@@ -66,6 +66,14 @@ public class PostController {
         PostContentsResponse postContentsResponse = new PostContentsResponse(post);
         return ResponseEntity.ok(postContentsResponse);
     }
+
+    @GetMapping("/search/{title}")
+    public ResponseEntity<?> getPostByTitle_usePathvariable(@PathVariable String title) {
+        Post post = postService.getPostByName(title).orElseThrow(() -> new CustomException(HttpStatus.OK, "게시물이 존재하지 않습니다."));
+        PostContentsResponse postContentsResponse = new PostContentsResponse(post);
+        return ResponseEntity.ok(postContentsResponse);
+    }
+
     // ID로 post 반환
     @GetMapping("/search/{id}")
     public ResponseEntity<PostContentsResponse> getPostById(@PathVariable Long id) {
