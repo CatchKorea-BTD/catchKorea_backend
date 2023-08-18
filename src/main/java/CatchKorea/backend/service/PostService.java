@@ -32,12 +32,17 @@ public class PostService {
     @Transactional
     public void save(Category category, PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
-        List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
-                .map(String::trim)
-                .collect(Collectors.toList());
-        post.setCategory(category);
-        post.setHashtag(hashTags);
-        postRepository.save(post);
+        if (postRequestDto.getHashtag().isEmpty()) {
+            post.setCategory(category);
+            postRepository.save(post);
+        } else {
+            List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toList());
+            post.setCategory(category);
+            post.setHashtag(hashTags);
+            postRepository.save(post);
+        }
     }
 
     @Transactional
@@ -85,12 +90,12 @@ public class PostService {
         return post;
     }
 
-    public Optional<Post> getPostByName(String title){
+    public Optional<Post> getPostByName(String title) {
         Optional<Post> post = postRepository.findPostByTitleIgnoreCase(title);
         return post;
     }
 
-    public List<PostResponseDto> findPostByCategory(Long categoryId){
+    public List<PostResponseDto> findPostByCategory(Long categoryId) {
         List<Post> postList = postRepository.findPostByCategoryId(categoryId);
         List<PostResponseDto> postTitleDtoList = postList.stream()
                 .map(PostResponseDto::new)
