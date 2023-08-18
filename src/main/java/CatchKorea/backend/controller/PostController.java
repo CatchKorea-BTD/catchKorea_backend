@@ -105,4 +105,10 @@ public class PostController {
         }
         return ResponseEntity.ok(postTitleDtoList);
     }
+
+    @GetMapping("/questions")
+    public ResponseEntity<?> getAllQuestions() {
+        List<QuestionResponseDto> questionResponseDtoList = postService.getAllQuestions();
+        return ResponseEntity.ok(questionResponseDtoList);
+    }
 }

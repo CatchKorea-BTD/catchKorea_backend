@@ -50,6 +50,14 @@ public class PostService {
         questionRepository.save(question);
     }
 
+    public List<QuestionResponseDto> getAllQuestions() {
+        List<Question> questions = questionRepository.findAll();
+        List<QuestionResponseDto> questionResponseDtoList = questions.stream()
+                .map(QuestionResponseDto::new)
+                .collect(Collectors.toList());
+        return questionResponseDtoList;
+    }
+
     @Transactional
     public void updatePost(Long postId, PostRequestDto postRequestDto) {
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "post를 찾을 수 없습니다."));

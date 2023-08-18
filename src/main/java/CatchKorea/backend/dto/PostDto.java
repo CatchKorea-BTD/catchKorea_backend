@@ -46,6 +46,21 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class QuestionResponseDto {
+        private Long id;
+        private String title;
+        private String contents;
+
+        public QuestionResponseDto(Question question) {
+            this.id = question.getId();
+            this.title = question.getTitle();
+            this.contents = question.getContents();
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class PostResponseDto {
         private Long id;
         private String title;

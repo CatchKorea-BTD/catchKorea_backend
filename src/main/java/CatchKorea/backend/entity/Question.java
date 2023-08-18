@@ -2,6 +2,7 @@ package CatchKorea.backend.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
