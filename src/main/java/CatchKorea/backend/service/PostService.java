@@ -32,7 +32,7 @@ public class PostService {
     @Transactional
     public void save(Category category, PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
-        if (postRequestDto.getHashtag().isEmpty()) {
+        if (postRequestDto.getHashtag() == null) {
             post.setCategory(category);
             postRepository.save(post);
         } else {
