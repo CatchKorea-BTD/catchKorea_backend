@@ -39,6 +39,12 @@ public class PostController {
         return ResponseEntity.ok(postRequestDto);
     }
 
+    @PostMapping("/upload/question")
+    public ResponseEntity<?> uploadQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
+        postService.saveQuestion(questionRequestDto);
+        return ResponseEntity.ok(questionRequestDto);
+    }
+
     @PostMapping("category/upload")
     public ResponseEntity<CategoryResponseDto> uploadCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         Category category = categoryRequestDto.to_Entity();

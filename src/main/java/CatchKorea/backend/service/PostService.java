@@ -3,8 +3,10 @@ package CatchKorea.backend.service;
 
 import CatchKorea.backend.entity.Category;
 import CatchKorea.backend.entity.Post;
+import CatchKorea.backend.entity.Question;
 import CatchKorea.backend.exception.CustomExceptions;
 import CatchKorea.backend.repositroy.PostRepository;
+import CatchKorea.backend.repositroy.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,21 +30,24 @@ import static CatchKorea.backend.exception.CustomExceptions.*;
 @Slf4j
 public class PostService {
     private final PostRepository postRepository;
+    private final QuestionRepository questionRepository;
 
     @Transactional
     public void save(Category category, PostRequestDto postRequestDto) {
         Post post = postRequestDto.to_Entity();
-        if (postRequestDto.getHashtag() == null) {
-            post.setCategory(category);
-            postRepository.save(post);
-        } else {
-            List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
-                    .map(String::trim)
-                    .collect(Collectors.toList());
-            post.setCategory(category);
-            post.setHashtag(hashTags);
-            postRepository.save(post);
-        }
+        List<String> hashTags = Arrays.stream(postRequestDto.getHashtag().split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        post.setCategory(category);
+        post.setHashtag(hashTags);
+        postRepository.save(post);
+
+    }
+
+    @Transactional
+    public void saveQuestion(QuestionRequestDto questionRequestDto) {
+        Question question = questionRequestDto.to_Entity();
+        questionRepository.save(question);
     }
 
     @Transactional
