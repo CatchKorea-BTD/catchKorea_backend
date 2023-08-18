@@ -26,7 +26,6 @@ public class Post {
 
     private String serviceLink;
 
-    @Column(length = 500)
     private String imageLink;
 
     @ElementCollection(fetch = FetchType.LAZY)
