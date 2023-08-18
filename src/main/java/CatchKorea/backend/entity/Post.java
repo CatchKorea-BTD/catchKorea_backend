@@ -26,6 +26,7 @@ public class Post {
 
     private String serviceLink;
 
+    @Column(nullable = true)
     private String imageLink;
 
     @ElementCollection(fetch = FetchType.LAZY)
