@@ -67,7 +67,7 @@ public class PostController {
         return ResponseEntity.ok(postContentsResponse);
     }
 
-    @GetMapping("/search/{title}")
+    @GetMapping("/search/title/{title}")
     public ResponseEntity<?> getPostByTitle_usePathvariable(@PathVariable String title) {
         Post post = postService.getPostByName(title).orElseThrow(() -> new CustomException(HttpStatus.OK, "게시물이 존재하지 않습니다."));
         PostContentsResponse postContentsResponse = new PostContentsResponse(post);
