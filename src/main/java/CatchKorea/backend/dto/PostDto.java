@@ -1,6 +1,7 @@
 package CatchKorea.backend.dto;
 
 import CatchKorea.backend.entity.Post;
+import CatchKorea.backend.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,20 @@ public class PostDto {
                     .contents(contents)
                     .serviceLink(serviceLink)
                     .imageLink(imageLink)
+                    .build();
+        }
+    }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class QuestionRequestDto {
+        private String title;
+        private String contents;
+
+        public Question to_Entity() {
+            return Question.builder()
+                    .title(title)
+                    .contents(contents)
                     .build();
         }
     }
